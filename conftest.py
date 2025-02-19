@@ -1,0 +1,34 @@
+import pytest
+import requests
+
+from data import DataIngredient
+from helpers import create_random_email, create_random_password, create_random_username
+from urls import Urls
+
+
+@pytest.fixture
+def create_new_user_and_delete():
+    payload_cred = {
+        'email': create_random_email(),
+        'password': create_random_password(),
+        'name': create_random_username()
+    }
+    response = requests.post(Urls.USER_REGISTER, data=payload_cred)
+    response_body = response.json()
+
+    yield payload_cred, response_body
+
+    access_token = response_body['accessToken']
+    requests.delete(Urls.USER_DELETE, headers={'Authorization': access_token})
+
+@pytest.fixture
+def create_user_and_order_and_delete(create_and_delete_user):
+    access_token = create_and_delete_user[1]['accessToken']
+    headers = {'Authorization': access_token}
+    payload = {'ingredients': [DataIngredient.BURGER_TWO]}
+    response_body = requests.post(Urls.CREATE_ORDER, data=payload, headers=headers)
+
+    yield access_token, response_body
+
+    requests.delete(Urls.USER_DELETE, headers={'Authorization': access_token})
+
