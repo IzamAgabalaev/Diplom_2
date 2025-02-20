@@ -1,7 +1,8 @@
 import allure
 import requests
 from conftest import *
-from data import DataUser
+from data import DataUser, Messages
+
 
 class TestRegistration:
     @allure.title('Регистрация с валидными данными')
@@ -18,7 +19,8 @@ class TestRegistration:
     def test_dont_use_one_input(self, credentials):
         response = requests.post(Urls.USER_REGISTER, data=credentials)
         assert response.status_code == 403
-        response.json() == {'success': False, 'message': 'Email, password and name are required fields'}
+        assert response.json()['success'] is False
+        assert response.json()['message'] == Messages.ERROR_MESSAGES['required_input']
 
     @allure.title('Регистрация с существующим email')
     def test_registration_existing_email(self):
@@ -29,4 +31,5 @@ class TestRegistration:
         }
         response = requests.post(Urls.USER_REGISTER, data=payload)
         assert response.status_code == 403
-        assert response.json() == {'success': False, 'message': 'User already exists'}
+        assert response.json()['success'] is False
+        assert response.json()['message'] == Messages.ERROR_MESSAGES['user_already']

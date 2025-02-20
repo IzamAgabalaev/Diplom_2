@@ -1,6 +1,6 @@
 import allure
 from conftest import *
-from data import DataUser
+from data import DataUser, Messages
 
 
 class TestLogin:
@@ -22,7 +22,6 @@ class TestLogin:
         assert response_body['user']['email'] == payload_cred['email']
         assert response_body['user']['name'] == payload_cred['name']
 
-
     @allure.title('Авторизация с незарегестрированным email')
     def test_login_email_invalid(self):
         payload = {
@@ -31,7 +30,8 @@ class TestLogin:
         }
         response = requests.post(Urls.USER_LOGIN, data=payload)
         assert response.status_code == 401
-        assert response.json() == {"success": False, "message": "email or password are incorrect"}
+        assert response.json()['success'] is False
+        assert response.json()["message"] == Messages.ERROR_MESSAGES['invalid_data']
 
     @allure.title('Авторизация с невалидным паролем')
     def test_login_invalid_password(self):
@@ -41,5 +41,6 @@ class TestLogin:
         }
         response = requests.post(Urls.USER_LOGIN, data=payload)
         assert response.status_code == 401
-        assert response.json() == {"success": False, "message": "email or password are incorrect"}
+        assert response.json()['success'] is False
+        assert response.json()["message"] == Messages.ERROR_MESSAGES['invalid_data']
 

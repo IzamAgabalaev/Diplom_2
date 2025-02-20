@@ -27,3 +27,13 @@ class DataIngredient:
                 "61c0c5a71d1f82001bdaaa7a", "61c0c5a71d1f82001bdaaa6f"]
 
     NO_VALID_HASH = "6653635736737"
+
+class Messages:
+
+    ERROR_MESSAGES = {
+        'not_authorized': 'You should be authorised',
+        'ingredient_id': 'Ingredient ids must be provided',
+        'invalid_data': 'email or password are incorrect',
+        'required_input': 'Email, password and name are required fields',
+        'user_already': 'User already exists'
+    }

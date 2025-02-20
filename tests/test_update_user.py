@@ -1,6 +1,7 @@
 import allure
 import requests
 from conftest import create_new_user_and_delete
+from data import Messages
 from helpers import create_random_email, create_random_password, create_random_username
 from urls import Urls
 
@@ -27,5 +28,6 @@ class TestUpdateUser:
     def test_update_no_login_user(self):
         response = requests.patch(Urls.USER_UPDATE, headers=Urls.HEADERS)
         assert response.status_code == 401
-        assert response.json() == {'success': False,'message': 'You should be authorised'}
+        assert response.json()['success'] is False
+        assert response.json()['message'] == Messages.ERROR_MESSAGES['not_authorized']
 

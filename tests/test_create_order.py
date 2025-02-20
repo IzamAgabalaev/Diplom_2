@@ -2,7 +2,7 @@ import allure
 import pytest
 import requests
 from conftest import create_new_user_and_delete
-from data import DataIngredient
+from data import DataIngredient, Messages
 from urls import Urls
 
 
@@ -33,14 +33,16 @@ class TestCreateOrder:
         payload = {'ingredients': []}
         response = requests.post(Urls.CREATE_ORDER, data=payload, headers=headers)
         assert response.status_code == 400
-        assert response.json() == {'success': False, 'message': 'Ingredient ids must be provided'}
+        assert response.json()['success'] is False
+        assert response.json()['message'] == Messages.ERROR_MESSAGES['ingredient_id']
 
     @allure.title('Создание заказа неавторизованным пользователем без ингредиентов')
     def test_create_order_no_login_user_no_ingredients(self):
         payload = {'ingredients': []}
         response = requests.post(Urls.CREATE_ORDER, data=payload, headers=Urls.HEADERS)
         assert response.status_code == 400
-        assert response.json() == {'success': False, 'message': 'Ingredient ids must be provided'}
+        assert response.json()['success'] is False
+        assert response.json()['message'] == Messages.ERROR_MESSAGES['ingredient_id']
 
     @allure.title('Создание заказа авторизованным пользователем c невалидным хэшом ингредиентов')
     def test_create_order_login_user_and_invalid_hash(self, create_new_user_and_delete):

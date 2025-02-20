@@ -14,3 +14,4 @@ def create_random_password():
 def create_random_username():
     username = fakeRU.first_name()
     return username
+

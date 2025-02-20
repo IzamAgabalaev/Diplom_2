@@ -22,8 +22,8 @@ def create_new_user_and_delete():
     requests.delete(Urls.USER_DELETE, headers={'Authorization': access_token})
 
 @pytest.fixture
-def create_user_and_order_and_delete(create_and_delete_user):
-    access_token = create_and_delete_user[1]['accessToken']
+def create_user_and_order_and_delete(create_new_user_and_delete):
+    access_token = create_new_user_and_delete[1]['accessToken']
     headers = {'Authorization': access_token}
     payload = {'ingredients': [DataIngredient.BURGER_TWO]}
     response_body = requests.post(Urls.CREATE_ORDER, data=payload, headers=headers)
