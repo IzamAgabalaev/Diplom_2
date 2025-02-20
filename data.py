@@ -20,10 +20,10 @@ class DataUser:
 
 class DataIngredient:
 
-    BURGER_ONE = ['61c0c5a71d1f82001bdaaa73', '61c0c5a71d1f82001bdaaa6c',
-                '61c0c5a71d1f82001bdaaa76', '61c0c5a71d1f82001bdaaa79']
+    BURGER_ONE = ["61c0c5a71d1f82001bdaaa73", "61c0c5a71d1f82001bdaaa6c",
+                "61c0c5a71d1f82001bdaaa76", "61c0c5a71d1f82001bdaaa79"]
 
-    BURGER_TWO = ['61c0c5a71d1f82001bdaaa74', '61c0c5a71d1f82001bdaaa6d',
-                '61c0c5a71d1f82001bdaaa7a', '61c0c5a71d1f82001bdaaa6f']
+    BURGER_TWO = ["61c0c5a71d1f82001bdaaa74", "61c0c5a71d1f82001bdaaa6d",
+                "61c0c5a71d1f82001bdaaa7a", "61c0c5a71d1f82001bdaaa6f"]
 
-    NO_VALID_HASH = '61c0c5a71d1f85328ffbbb4g'
+    NO_VALID_HASH = "6653635736737"

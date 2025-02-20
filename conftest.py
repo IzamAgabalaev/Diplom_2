@@ -32,3 +32,16 @@ def create_user_and_order_and_delete(create_and_delete_user):
 
     requests.delete(Urls.USER_DELETE, headers={'Authorization': access_token})
 
+@pytest.fixture()
+def login_user(create_new_user_and_delete):
+    payload_cred, _ = create_new_user_and_delete
+    response = requests.post(Urls.USER_LOGIN, data={
+        'email': payload_cred['email'],
+        'password': payload_cred['password']
+    })
+    response_body = response.json()
+
+    yield response_body['accessToken']
+
+
+
